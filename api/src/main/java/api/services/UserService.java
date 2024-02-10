@@ -3,6 +3,7 @@ package api.services;
 import api.exceptions.BadRequestException;
 import api.models.User;
 import api.repositories.UserRepository;
+import api.utils.EncoderUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +11,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     private final UserRepository repository;
+    private final EncoderUtils encoderUtils;
 
     private static final String ERROR_EMAIL_NOT_UNIQUE = "O email informado já está sendo utilizado por outra conta";
 
     public User register(User entity) {
         this.validateEmailUniqueness(entity.getEmail());
+        this.encodeUserPassword(entity);
         return this.create(entity);
     }
 
@@ -27,5 +30,9 @@ public class UserService {
         if (Boolean.TRUE.equals(this.repository.existsByEmailIgnoreCase(email))) {
             throw new BadRequestException(ERROR_EMAIL_NOT_UNIQUE);
         }
+    }
+
+    private void encodeUserPassword(User user) {
+        user.setPassword(this.encoderUtils.encode(user.getPassword()));
     }
 }
