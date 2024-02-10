@@ -1,5 +1,6 @@
 package api.dtos.requests.authentication;
 
+import api.models.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -14,5 +15,13 @@ public record UserRegisterRequestDTO(
         @Size(min = 6, max = 120, message = "A senha deve ter entre {min} e {max} caracteres")
         String password
 ) {
+
+    public User convert() {
+        return User
+                .builder()
+                .email(this.email())
+                .password(this.password())
+                .build();
+    }
 }
 
