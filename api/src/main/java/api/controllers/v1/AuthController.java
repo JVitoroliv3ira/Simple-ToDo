@@ -21,8 +21,7 @@ public class AuthController {
 
     @PostMapping(path = "/register")
     public ResponseEntity<Response<User>> register(@Valid @RequestBody UserRegisterRequestDTO request) {
-        this.userService.validateEmailUniqueness(request.email());
-        User createdUser = this.userService.create(request.convert());
+        User createdUser = this.userService.register(request.convert());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new Response<>(
