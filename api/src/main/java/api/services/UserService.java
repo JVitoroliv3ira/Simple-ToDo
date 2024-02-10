@@ -13,6 +13,11 @@ public class UserService {
 
     private static final String ERROR_EMAIL_NOT_UNIQUE = "O email informado já está sendo utilizado por outra conta";
 
+    public User register(User entity) {
+        this.validateEmailUniqueness(entity.getEmail());
+        return this.create(entity);
+    }
+
     public User create(User entity) {
         entity.setId(null);
         return this.repository.save(entity);
