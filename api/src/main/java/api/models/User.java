@@ -11,14 +11,14 @@ import java.util.Objects;
 @Setter
 @Builder
 @Entity
-@Table(schema = "simple-todo", name = "tb_users")
+@Table(schema = "simple_todo", name = "tb_users")
 public class User {
 
     @Id
     @GeneratedValue(generator = "sq_users", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(
             name = "sq_users",
-            schema = "simple-todo",
+            schema = "simple_todo",
             sequenceName = "sq_users",
             allocationSize = 1
     )
