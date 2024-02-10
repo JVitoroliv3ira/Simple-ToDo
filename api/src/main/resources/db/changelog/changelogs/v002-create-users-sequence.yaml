@@ -5,7 +5,7 @@ databaseChangeLog:
       author: Joao Vitor de Oliveira Santos
       changes:
         - createSequence:
-            schemaName: simple-todo
+            schemaName: simple_todo
             sequenceName: sq_users
             startValue: 1
             incrementBy: 1

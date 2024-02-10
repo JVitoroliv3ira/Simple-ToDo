@@ -5,7 +5,7 @@ databaseChangeLog:
       author: Joao Vitor de Oliveira Santos
       changes:
         - createTable:
-            schemaName: simple-todo
+            schemaName: simple_todo
             tableName: tb_users
             columns:
               - column:

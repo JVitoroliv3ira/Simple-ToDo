@@ -5,4 +5,4 @@ databaseChangeLog:
       author: Joao Vitor de Oliveira Santos
       changes:
         - sql:
-            sql: create schema simple-todo;
+            sql: create schema simple_todo;
