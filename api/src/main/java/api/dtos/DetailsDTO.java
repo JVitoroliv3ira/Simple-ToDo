@@ -1,6 +1,7 @@
 package api.dtos;
 
 import api.models.User;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 
+@EqualsAndHashCode
 @RequiredArgsConstructor
 public class DetailsDTO implements UserDetails {
     private final User user;
