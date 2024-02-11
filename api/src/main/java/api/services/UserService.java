@@ -4,7 +4,7 @@ import api.dtos.DetailsDTO;
 import api.exceptions.BadRequestException;
 import api.models.User;
 import api.repositories.UserRepository;
-import api.utils.EncoderUtils;
+import api.utils.EncoderUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements UserDetailsService {
     private final UserRepository repository;
-    private final EncoderUtils encoderUtils;
+    private final EncoderUtil encoderUtil;
 
     private static final String ERROR_EMAIL_NOT_UNIQUE = "O email informado já está sendo utilizado por outra conta";
     private static final String ERROR_ENTITY_NOT_FOUND = "Usuário não encontrado na base de dados";
@@ -43,6 +43,6 @@ public class UserService implements UserDetailsService {
     }
 
     private void encodeUserPassword(User user) {
-        user.setPassword(this.encoderUtils.encode(user.getPassword()));
+        user.setPassword(this.encoderUtil.encode(user.getPassword()));
     }
 }
