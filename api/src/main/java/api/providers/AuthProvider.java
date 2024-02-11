@@ -36,7 +36,7 @@ public class AuthProvider implements AuthenticationProvider {
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return authentication.equals(AuthProvider.class);
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 
     private void validatePassword(String rawPassword, String encodedPassword) {
