@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
         return new DetailsDTO(user);
     }
 
-    private void encodeUserPassword(User user) {
+    public void encodeUserPassword(User user) {
         user.setPassword(this.encoderUtil.encode(user.getPassword()));
     }
 }
