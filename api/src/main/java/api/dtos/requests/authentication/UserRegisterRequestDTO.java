@@ -4,6 +4,8 @@ import api.models.User;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 
 public record UserRegisterRequestDTO(
         @NotNull(message = "O email não pode ser nulo")
@@ -22,6 +24,13 @@ public record UserRegisterRequestDTO(
                 .email(this.email())
                 .password(this.password())
                 .build();
+    }
+
+    public Authentication getAuthentication() {
+        return new UsernamePasswordAuthenticationToken(
+                email(),
+                password()
+        );
     }
 }
 
