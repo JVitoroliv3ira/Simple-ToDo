@@ -4,7 +4,6 @@ import api.dtos.requests.authentication.UserAuthenticationRequestDTO;
 import api.dtos.requests.authentication.UserRegisterRequestDTO;
 import api.dtos.responses.AuthenticatedUserResponseDTO;
 import api.dtos.responses.Response;
-import api.models.User;
 import api.services.AuthService;
 import api.services.UserService;
 import jakarta.validation.Valid;
@@ -24,12 +23,13 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping(path = "/register")
-    public ResponseEntity<Response<User>> register(@Valid @RequestBody UserRegisterRequestDTO request) {
-        User createdUser = this.userService.register(request.convert());
+    public ResponseEntity<Response<AuthenticatedUserResponseDTO>> register(@Valid @RequestBody UserRegisterRequestDTO request) {
+        this.userService.register(request.convert());
+        AuthenticatedUserResponseDTO response = this.authService.authenticate(request.getAuthentication());
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new Response<>(
-                        createdUser,
+                        response,
                         "Usuário cadastrado com sucesso",
                         null
                 ));
