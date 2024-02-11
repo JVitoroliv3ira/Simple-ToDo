@@ -1,19 +1,22 @@
 package api.services;
 
+import api.dtos.DetailsDTO;
 import api.exceptions.BadRequestException;
 import api.models.User;
 import api.repositories.UserRepository;
 import api.utils.EncoderUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
     private final UserRepository repository;
     private final EncoderUtils encoderUtils;
 
     private static final String ERROR_EMAIL_NOT_UNIQUE = "O email informado já está sendo utilizado por outra conta";
+    private static final String ERROR_ENTITY_NOT_FOUND = "Usuário não encontrado na base de dados";
 
     public User register(User entity) {
         this.validateEmailUniqueness(entity.getEmail());
@@ -30,6 +33,13 @@ public class UserService {
         if (Boolean.TRUE.equals(this.repository.existsByEmailIgnoreCase(email))) {
             throw new BadRequestException(ERROR_EMAIL_NOT_UNIQUE);
         }
+    }
+
+    @Override
+    public DetailsDTO loadUserByUsername(String email) throws BadRequestException {
+        User user = this.repository.findByEmail(email)
+                .orElseThrow(() -> new BadRequestException(ERROR_ENTITY_NOT_FOUND));
+        return new DetailsDTO(user);
     }
 
     private void encodeUserPassword(User user) {
