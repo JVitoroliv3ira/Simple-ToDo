@@ -12,6 +12,7 @@ public class TodoService {
 
     public Todo create(Todo entity) {
         entity.setId(null);
+        entity.setIsFinished(false);
         return this.repository.save(entity);
     }
 }
