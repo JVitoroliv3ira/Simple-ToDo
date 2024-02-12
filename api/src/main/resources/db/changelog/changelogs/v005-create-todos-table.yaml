@@ -30,3 +30,9 @@ databaseChangeLog:
               - column:
                   name: due_date
                   type: date
+              - column:
+                  name: user_id
+                  type: numeric(10, 0)
+                  constraints:
+                    references: simple_todo.tb_users(id)
+                    foreignKeyName: fk_tb_todos_tb_users
