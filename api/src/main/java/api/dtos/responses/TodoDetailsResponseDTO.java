@@ -21,7 +21,7 @@ public record TodoDetailsResponseDTO(
                 todo.getId(),
                 todo.getTitle(),
                 todo.getDescription(),
-                todo.getIsPriority(),
+                todo.getIsFinished(),
                 todo.getIsPriority(),
                 todo.getDueDate()
         );
