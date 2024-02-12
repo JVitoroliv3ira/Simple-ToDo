@@ -4,6 +4,7 @@ import api.dtos.responses.AuthenticatedUserResponseDTO;
 import api.providers.AuthProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final AuthProvider authProvider;
     private final TokenService tokenService;
+    private final UserService userService;
 
     public AuthenticatedUserResponseDTO authenticate(Authentication authentication) {
         Authentication auth = this.authProvider.authenticate(authentication);
@@ -22,4 +24,12 @@ public class AuthService {
         );
     }
 
+    public String getAuthenticatedUserEmail() {
+        return (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    public Long getAuthenticatedUserId() {
+        String email = this.getAuthenticatedUserEmail();
+        return this.userService.findByEmail(email).getId();
+    }
 }
