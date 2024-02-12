@@ -23,6 +23,11 @@ databaseChangeLog:
                   name: description
                   type: varchar2(300)
               - column:
+                  name: is_finished
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
                   name: is_priority
                   type: boolean
                   constraints:
