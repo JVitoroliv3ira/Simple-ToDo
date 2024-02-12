@@ -176,4 +176,19 @@ class UserServiceTest {
         verify(this.encoderUtil, times(1))
                 .encode("@payload");
     }
+
+    @Test
+    void find_by_email_should_call_find_by_email_method_of_user_repository() {
+        when(this.userRepository.findByEmail(payloadWithId.getEmail())).thenReturn(Optional.of(payloadWithId));
+        this.userService.findByEmail(payloadWithId.getEmail());
+        verify(this.userRepository, times(1)).findByEmail(payloadWithId.getEmail());
+    }
+
+    @Test
+    void find_by_email_should_throw_an_exception_when_requested_user_does_not_exists() {
+        when(this.userRepository.findByEmail(payloadWithId.getEmail())).thenReturn(Optional.empty());
+        assertThatThrownBy(() -> this.userService.findByEmail(payloadWithId.getEmail()))
+                .isInstanceOf(BadRequestException.class)
+                .hasMessage(ERROR_ENTITY_NOT_FOUND);
+    }
 }
