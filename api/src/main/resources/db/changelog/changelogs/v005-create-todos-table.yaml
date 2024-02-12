@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: v005-1-create-todos-table
+      context: ddl
+      author: Joao Vitor de Oliveira Santos
+      changes:
+        - createTable:
+            schemaName: simple_todo
+            tableName: tb_todos
+            columns:
+              - column:
+                  name: id
+                  type: numeric(10, 0)
+                  constraints:
+                    primaryKey: true
+                    foreignKeyName: pk_todos
+              - column:
+                  name: title
+                  type: varchar2(60)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar2(300)
+              - column:
+                  name: is_priority
+                  type: boolean
+                  constraints:
+                    nullable: false
+              - column:
+                  name: due_date
+                  type: date
