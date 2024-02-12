@@ -36,6 +36,9 @@ public class Todo {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "is_finished")
+    private Boolean isFinished;
+
     @Column(name = "is_priority")
     private Boolean isPriority;
 
