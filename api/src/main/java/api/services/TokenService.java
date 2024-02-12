@@ -48,8 +48,4 @@ public class TokenService {
         return JWT.decode(token).getSubject();
     }
 
-    public String getAuthenticatedUserEmail() {
-        return (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    }
-
 }
