@@ -1,6 +1,7 @@
 package api.services;
 
 import api.dtos.responses.AuthenticatedUserResponseDTO;
+import api.models.User;
 import api.providers.AuthProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.mockito.Mockito.*;
@@ -91,5 +93,36 @@ class AuthServiceTest {
         AuthenticatedUserResponseDTO result = this.authService
                 .authenticate(authenticationPayload);
         Assertions.assertEquals(authenticatedUserResponseDTOPayload, result);
+    }
+
+    @Test
+    void get_authenticated_user_email_should_return_authentication_principal() {
+        SecurityContextHolder.getContext().setAuthentication(authenticationPayload);
+        String result = this.authService.getAuthenticatedUserEmail();
+        Assertions.assertEquals(
+                authenticationPayload.getPrincipal().toString(),
+                result
+        );
+    }
+
+    @Test
+    void get_authenticated_user_should_call_find_by_email_method_of_user_service() {
+        User payload = new User(3L, "payload@payload.com", "@payload");
+        SecurityContextHolder.getContext().setAuthentication(authenticationPayload);
+        when(this.userService.findByEmail(authenticationPayload.getPrincipal().toString()))
+                .thenReturn(payload);
+        this.authService.getAuthenticatedUserId();
+        verify(this.userService, times(1))
+                .findByEmail(authenticationPayload.getPrincipal().toString());
+    }
+
+    @Test
+    void get_authenticated_user_id_should_return_authenticated_user_id() {
+        User payload = new User(3L, "payload@payload.com", "@payload");
+        SecurityContextHolder.getContext().setAuthentication(authenticationPayload);
+        when(this.userService.findByEmail(authenticationPayload.getPrincipal().toString()))
+                .thenReturn(payload);
+        Long result = this.authService.getAuthenticatedUserId();
+        Assertions.assertEquals(payload.getId(), result);
     }
 }
