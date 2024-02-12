@@ -1,6 +1,7 @@
 package api.dtos.responses;
 
 import api.models.Todo;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -26,8 +27,9 @@ public record TodoDetailsResponseDTO(
         );
     }
 
+    @JsonSerialize
     public Boolean deadlineHasPassed() {
-        if (Objects.nonNull(dueDate())) {
+        if (Objects.isNull(dueDate())) {
             return false;
         }
 
