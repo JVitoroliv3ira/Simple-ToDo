@@ -22,6 +22,8 @@ class AuthServiceTest {
     private final AuthProvider authProvider;
     @Mock
     private final TokenService tokenService;
+    @Mock
+    private final UserService userService;
 
     private final Authentication authenticationPayload = this.buildAuthenticationPayload();
     private final String tokenPayload = "payload.token.123";
@@ -29,14 +31,23 @@ class AuthServiceTest {
             this.buildAuthenticatedUserResponseDTO();
 
     @Autowired
-    public AuthServiceTest(AuthProvider authProvider, TokenService tokenService) {
+    public AuthServiceTest(
+            AuthProvider authProvider,
+            TokenService tokenService,
+            UserService userService
+    ) {
         this.authProvider = authProvider;
         this.tokenService = tokenService;
+        this.userService = userService;
     }
 
     @BeforeEach
     void setUp() {
-        this.authService = new AuthService(this.authProvider, this.tokenService);
+        this.authService = new AuthService(
+                this.authProvider,
+                this.tokenService,
+                this.userService
+        );
     }
 
     private Authentication buildAuthenticationPayload() {
