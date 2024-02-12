@@ -7,3 +7,5 @@ databaseChangeLog:
       file: "db/changelog/changelogs/v003-create-users-table.yaml"
   - include:
       file: "db/changelog/changelogs/v004-create-todos-sequence.yaml"
+  - include:
+      file: "db/changelog/changelogs/v005-create-todos-table.yaml"
