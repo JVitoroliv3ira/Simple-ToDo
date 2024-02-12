@@ -42,6 +42,11 @@ public class UserService implements UserDetailsService {
         return new DetailsDTO(user);
     }
 
+    public User findByEmail(String email) {
+        return this.repository.findByEmail(email)
+                .orElseThrow(() -> new BadRequestException(ERROR_EMAIL_NOT_UNIQUE));
+    }
+
     public void encodeUserPassword(User user) {
         user.setPassword(this.encoderUtil.encode(user.getPassword()));
     }
