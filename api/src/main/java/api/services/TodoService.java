@@ -24,4 +24,8 @@ public class TodoService {
                 .findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new BadRequestException(ERROR_INVALID_TODO_CREATOR));
     }
+
+    public void delete(Todo entity) {
+        this.repository.delete(entity);
+    }
 }
