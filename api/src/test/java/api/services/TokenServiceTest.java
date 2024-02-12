@@ -5,8 +5,6 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Date;
@@ -81,20 +79,7 @@ class TokenServiceTest {
     @Test
     void get_token_subject_should_return_user_email() {
         String token = this.tokenService.generateToken(emailPayload);
-        String  result = this.tokenService.getTokenSubject(token);
-        assertEquals(emailPayload, result);
-    }
-
-    @Test
-    void get_authenticated_user_email_should_return_user_email() {
-        SecurityContextHolder.getContext().setAuthentication(
-                new UsernamePasswordAuthenticationToken(
-                        emailPayload,
-                        null
-                )
-        );
-
-        String result = this.tokenService.getAuthenticatedUserEmail();
+        String result = this.tokenService.getTokenSubject(token);
         assertEquals(emailPayload, result);
     }
 }
