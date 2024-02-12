@@ -10,10 +10,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/v1/todo")
@@ -33,6 +30,21 @@ public class TodoController {
                 .body(new Response<>(
                         new TodoDetailsResponseDTO(todo),
                         "Tarefa cadastrada com sucesso",
+                        null
+                ));
+    }
+
+    @GetMapping(path = "/read/{id}")
+    public ResponseEntity<Response<TodoDetailsResponseDTO>> read(@PathVariable Long id) {
+        Todo todo = this.todoService.findByIdAndUserId(
+                id,
+                this.authService.getAuthenticatedUserId()
+        );
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new Response<>(
+                        new TodoDetailsResponseDTO(todo),
+                        null,
                         null
                 ));
     }
