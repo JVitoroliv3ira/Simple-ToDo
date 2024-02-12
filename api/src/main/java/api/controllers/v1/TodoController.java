@@ -48,5 +48,21 @@ public class TodoController {
                         null
                 ));
     }
+
+    @DeleteMapping(path = "/delete/{id}")
+    public ResponseEntity<Response<?>> delete(@PathVariable Long id) {
+        Todo todo = this.todoService.findByIdAndUserId(
+                id,
+                this.authService.getAuthenticatedUserId()
+        );
+        this.todoService.delete(todo);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new Response<>(
+                        null,
+                        "Tarefa deletada com sucesso",
+                        null
+                ));
+    }
 }
 
