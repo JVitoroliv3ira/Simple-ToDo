@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
 
     public User findByEmail(String email) {
         return this.repository.findByEmail(email)
-                .orElseThrow(() -> new BadRequestException(ERROR_EMAIL_NOT_UNIQUE));
+                .orElseThrow(() -> new BadRequestException(ERROR_ENTITY_NOT_FOUND));
     }
 
     public void encodeUserPassword(User user) {
