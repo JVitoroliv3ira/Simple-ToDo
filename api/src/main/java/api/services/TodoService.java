@@ -19,13 +19,25 @@ public class TodoService {
         return this.repository.save(entity);
     }
 
-    public Todo findByIdAndUserId(Long id, Long userId) {
+    public Todo read(Long id, Long userId) {
         return this.repository
                 .findByIdAndUserId(id, userId)
                 .orElseThrow(() -> new BadRequestException(ERROR_INVALID_TODO_CREATOR));
     }
 
-    public void delete(Todo entity) {
-        this.repository.delete(entity);
+    public Todo update(Todo entity, Long userId) {
+        this.validateTodoCreator(entity.getId(), userId);
+        return this.repository.save(entity);
+    }
+
+    public void delete(Long id, Long userId) {
+        this.validateTodoCreator(id, userId);
+        this.repository.deleteById(id);
+    }
+
+    public void validateTodoCreator(Long id, Long userId) {
+        if (Boolean.FALSE.equals(this.repository.existsByIdAndUserId(id, userId))) {
+            throw new BadRequestException(ERROR_INVALID_TODO_CREATOR);
+        }
     }
 }
