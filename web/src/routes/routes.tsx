@@ -6,7 +6,7 @@ const AppRouter = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/auth/register" element={<RegisterPage />} />
+        <Route path="/app/auth/register" element={<RegisterPage />} />
       </Routes>
     </Router>
   )
