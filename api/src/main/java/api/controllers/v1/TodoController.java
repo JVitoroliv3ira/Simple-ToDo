@@ -2,6 +2,7 @@ package api.controllers.v1;
 
 import api.dtos.requests.todos.TodoCreationRequestDTO;
 import api.dtos.requests.todos.TodoUpdateRequestDTO;
+import api.dtos.responses.PaginatedResponse;
 import api.dtos.responses.Response;
 import api.dtos.responses.TodoDetailsResponseDTO;
 import api.models.Todo;
@@ -9,6 +10,7 @@ import api.services.AuthService;
 import api.services.TodoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -55,9 +57,9 @@ public class TodoController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new Response<>(
-                   new TodoDetailsResponseDTO(todo),
-                   "Tarefa atualizada com sucesso",
-                   null
+                        new TodoDetailsResponseDTO(todo),
+                        "Tarefa atualizada com sucesso",
+                        null
                 ));
     }
 
@@ -74,5 +76,16 @@ public class TodoController {
                 ));
     }
 
+    @GetMapping(path = "/get-all/{pageSize}")
+    public ResponseEntity<Response<PaginatedResponse<TodoDetailsResponseDTO>>> getAll(@PathVariable Integer pageSize) {
+        Long userId = this.authService.getAuthenticatedUserId();
+        Page<TodoDetailsResponseDTO> page = this.todoService.getAll(userId, pageSize);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new Response<>(
+                        new PaginatedResponse<>(page),
+                        null,
+                        null
+                ));
+    }
 }
-
