@@ -4,7 +4,7 @@ import api.dtos.requests.todos.TodoCreationRequestDTO;
 import api.dtos.requests.todos.TodoUpdateRequestDTO;
 import api.dtos.responses.PaginatedResponse;
 import api.dtos.responses.Response;
-import api.dtos.responses.TodoDetailsResponseDTO;
+import api.dtos.responses.todos.TodoDetailsResponseDTO;
 import api.models.Todo;
 import api.services.AuthService;
 import api.services.TodoService;

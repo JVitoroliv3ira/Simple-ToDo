@@ -1,4 +1,4 @@
-package api.dtos.responses;
+package api.dtos.responses.todos;
 
 import api.models.Todo;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

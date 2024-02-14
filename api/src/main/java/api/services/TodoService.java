@@ -1,6 +1,6 @@
 package api.services;
 
-import api.dtos.responses.TodoDetailsResponseDTO;
+import api.dtos.responses.todos.TodoDetailsResponseDTO;
 import api.exceptions.BadRequestException;
 import api.models.Todo;
 import api.repositories.TodoRepository;
