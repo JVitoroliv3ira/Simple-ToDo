@@ -99,21 +99,21 @@ class TodoServiceTest {
     @Test
     void update_should_call_exists_by_id_and_user_id_method_of_todo_repository() {
         when(todoRepository.existsByIdAndUserId(anyLong(), anyLong())).thenReturn(true);
-        todoService.update(payloadWithId, payloadWithId.getUser().getId());
+        todoService.update(payloadWithId);
         verify(todoRepository, times(1)).existsByIdAndUserId(payloadWithId.getId(), payloadWithId.getUser().getId());
     }
 
     @Test
     void update_should_throw_an_exception_when_requested_todo_does_not_exists() {
         when(todoRepository.existsByIdAndUserId(anyLong(), anyLong())).thenReturn(false);
-        assertThatThrownBy(() -> todoService.update(payloadWithId, payloadWithId.getUser().getId()))
+        assertThatThrownBy(() -> todoService.update(payloadWithId))
                 .isInstanceOf(BadRequestException.class);
     }
 
     @Test
     void update_should_call_save_method_of_todo_repository() {
         when(todoRepository.existsByIdAndUserId(anyLong(), anyLong())).thenReturn(true);
-        todoService.update(payloadWithId, payloadWithId.getUser().getId());
+        todoService.update(payloadWithId);
         verify(todoRepository, times(1)).save(payloadWithId);
     }
 
