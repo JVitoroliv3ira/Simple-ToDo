@@ -1,6 +1,7 @@
 package api.controllers.v1;
 
 import api.dtos.requests.todos.TodoCreationRequestDTO;
+import api.dtos.requests.todos.TodoUpdateRequestDTO;
 import api.dtos.responses.Response;
 import api.dtos.responses.TodoDetailsResponseDTO;
 import api.models.Todo;
@@ -20,26 +21,24 @@ public class TodoController {
     private final TodoService todoService;
     private final AuthService authService;
 
-    @PostMapping("/create")
+
+    @PostMapping(path = "/create")
     public ResponseEntity<Response<TodoDetailsResponseDTO>> create(@Valid @RequestBody TodoCreationRequestDTO request) {
-        Todo todo = this.todoService.create(request.convert(
-                this.authService.getAuthenticatedUserId()
-        ));
+        Long userId = this.authService.getAuthenticatedUserId();
+        Todo todo = this.todoService.create(request.convert(userId));
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new Response<>(
                         new TodoDetailsResponseDTO(todo),
-                        "Tarefa cadastrada com sucesso",
+                        "Tarefa cadastrada com sucesso.",
                         null
                 ));
     }
 
     @GetMapping(path = "/read/{id}")
     public ResponseEntity<Response<TodoDetailsResponseDTO>> read(@PathVariable Long id) {
-        Todo todo = this.todoService.findByIdAndUserId(
-                id,
-                this.authService.getAuthenticatedUserId()
-        );
+        Long userId = this.authService.getAuthenticatedUserId();
+        Todo todo = this.todoService.read(id, userId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new Response<>(
@@ -49,20 +48,31 @@ public class TodoController {
                 ));
     }
 
+    @PutMapping(path = "/update")
+    public ResponseEntity<Response<TodoDetailsResponseDTO>> update(@Valid @RequestBody TodoUpdateRequestDTO request) {
+        Long userId = this.authService.getAuthenticatedUserId();
+        Todo todo = this.todoService.update(request.convert(userId));
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new Response<>(
+                   new TodoDetailsResponseDTO(todo),
+                   "Tarefa atualizada com sucesso",
+                   null
+                ));
+    }
+
     @DeleteMapping(path = "/delete/{id}")
     public ResponseEntity<Response<?>> delete(@PathVariable Long id) {
-        Todo todo = this.todoService.findByIdAndUserId(
-                id,
-                this.authService.getAuthenticatedUserId()
-        );
-        this.todoService.delete(todo);
+        Long userId = this.authService.getAuthenticatedUserId();
+        this.todoService.delete(id, userId);
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new Response<>(
                         null,
-                        "Tarefa deletada com sucesso",
+                        "Tarefa deletada com sucesso.",
                         null
                 ));
     }
+
 }
 
