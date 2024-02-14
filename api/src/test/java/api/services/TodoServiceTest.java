@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
@@ -156,6 +158,15 @@ class TodoServiceTest {
         assertThatThrownBy(() -> this.todoService.validateTodoCreator(payloadWithId.getId(), payloadWithId.getUser().getId()))
                 .isInstanceOf(BadRequestException.class)
                 .hasMessage(ERROR_INVALID_TODO_CREATOR);
+    }
+
+    @Test
+    void get_all_should_call_find_all_by_user_id_method_of_todo_repository() {
+        when(this.todoRepository.findAllByUserId(userPayload.getId(), Pageable.ofSize(5)))
+                .thenReturn(Page.empty());
+        this.todoService.getAll(userPayload.getId(), 5);
+        verify(this.todoRepository, times(1))
+                .findAllByUserId(userPayload.getId(), Pageable.ofSize(5));
     }
 
 }
