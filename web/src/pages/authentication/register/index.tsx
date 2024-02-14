@@ -1,9 +1,13 @@
 import React from "react";
+import HeaderComponent from "../../../components/header";
 
 const RegisterPage = () => {
   return (
     <div>
-      <h1 className="text-blue-500">Hello, World</h1>
+      <HeaderComponent>
+        <a className="font-light" href="/app/auth/register">Crie sua conta</a>
+        <a className="font-light" href="/app/auth/login">Entrar</a>
+      </HeaderComponent>
     </div>
   );
 }
