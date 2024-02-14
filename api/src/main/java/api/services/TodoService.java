@@ -25,8 +25,8 @@ public class TodoService {
                 .orElseThrow(() -> new BadRequestException(ERROR_INVALID_TODO_CREATOR));
     }
 
-    public Todo update(Todo entity, Long userId) {
-        this.validateTodoCreator(entity.getId(), userId);
+    public Todo update(Todo entity) {
+        this.validateTodoCreator(entity.getId(), entity.getUser().getId());
         return this.repository.save(entity);
     }
 
