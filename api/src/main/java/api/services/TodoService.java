@@ -1,9 +1,12 @@
 package api.services;
 
+import api.dtos.responses.TodoDetailsResponseDTO;
 import api.exceptions.BadRequestException;
 import api.models.Todo;
 import api.repositories.TodoRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -39,5 +42,12 @@ public class TodoService {
         if (Boolean.FALSE.equals(this.repository.existsByIdAndUserId(id, userId))) {
             throw new BadRequestException(ERROR_INVALID_TODO_CREATOR);
         }
+    }
+
+    public Page<TodoDetailsResponseDTO> getAll(Long userId, Integer pageSize) {
+        Pageable pageable = Pageable.ofSize(pageSize);
+        return this.repository
+                .findAllByUserId(userId, pageable)
+                .map(TodoDetailsResponseDTO::new);
     }
 }
