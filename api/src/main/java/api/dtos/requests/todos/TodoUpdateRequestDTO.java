@@ -15,6 +15,8 @@ public record TodoUpdateRequestDTO(
         String title,
         @Size(max = 300, message = "A descrição deve conter no máximo {max} caracteres")
         String description,
+        @NotNull(message = "Informe o status da tarefa")
+        Boolean isFinished,
         @NotNull(message = "Informe se a tarefa é uma prioridade")
         Boolean isPriority,
 
@@ -28,6 +30,7 @@ public record TodoUpdateRequestDTO(
                 .id(id())
                 .title(title())
                 .description(description())
+                .isFinished(isFinished())
                 .isPriority(isPriority())
                 .dueDate(dueDate())
                 .user(User.builder().id(userId).build())
