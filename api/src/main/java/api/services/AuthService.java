@@ -1,6 +1,6 @@
 package api.services;
 
-import api.dtos.responses.AuthenticatedUserResponseDTO;
+import api.dtos.responses.authentication.AuthenticatedUserResponseDTO;
 import api.providers.AuthProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

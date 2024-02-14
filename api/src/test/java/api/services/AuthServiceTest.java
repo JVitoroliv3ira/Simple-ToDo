@@ -1,6 +1,6 @@
 package api.services;
 
-import api.dtos.responses.AuthenticatedUserResponseDTO;
+import api.dtos.responses.authentication.AuthenticatedUserResponseDTO;
 import api.models.User;
 import api.providers.AuthProvider;
 import org.junit.jupiter.api.Assertions;

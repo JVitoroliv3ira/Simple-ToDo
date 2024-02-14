@@ -2,7 +2,7 @@ package api.controllers.v1;
 
 import api.dtos.requests.authentication.UserAuthenticationRequestDTO;
 import api.dtos.requests.authentication.UserRegisterRequestDTO;
-import api.dtos.responses.AuthenticatedUserResponseDTO;
+import api.dtos.responses.authentication.AuthenticatedUserResponseDTO;
 import api.dtos.responses.Response;
 import api.services.AuthService;
 import api.services.UserService;
