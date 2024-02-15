@@ -1,17 +1,34 @@
 import HeaderComponent from "../../../components/header";
 import FooterComponent from "../../../components/footer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import UserAuthenticationRequestDTO from "../../../core/dtos/requests/authentication/user-authentication-request.dto";
 import handleUserRegistration from "../../../core/services/authentication/user-register.service";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const [form, setForm] = useState({email: '', password: ''} as UserAuthenticationRequestDTO);
+  const [errors, setErrors] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const handleUserRegistrationClick = (e: any) => {
+  const handleUserRegistrationClick = (e: any): void => {
     e.preventDefault();
+    setLoading(true);
     handleUserRegistration(form)
-      .then(r => console.log(r))
-      .catch(e => console.log(e));
+      .then(r => {
+        r.errors.length > 0 
+          ? handleRegistrationError(r.errors)
+          : handleRegistrationSuccess();
+      })
+      .finally(() => setLoading(false));
+  }
+
+  const handleRegistrationSuccess = (): void => {
+
+  }
+
+  const handleRegistrationError = (err: string[]): void => {
+    setErrors(err);
+    errors.forEach(e => toast.error(e));
   }
 
   const handleFormInputChange = (e: any) => {
