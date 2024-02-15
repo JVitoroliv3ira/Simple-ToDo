@@ -1,7 +1,30 @@
 import HeaderComponent from "../../../components/header";
 import FooterComponent from "../../../components/footer";
+import { useEffect, useState } from "react";
+import UserAuthenticationRequestDTO from "../../../core/dtos/requests/authentication/user-authentication-request.dto";
+import handleUserRegistration from "../../../core/services/authentication/user-register.service";
 
 const RegisterPage = () => {
+  const [form, setForm] = useState({email: '', password: ''} as UserAuthenticationRequestDTO);
+
+  const handleUserRegistrationClick = (e: any) => {
+    e.preventDefault();
+    handleUserRegistration(form)
+      .then(r => console.log(r))
+      .catch(e => console.log(e));
+  }
+
+  const handleFormInputChange = (e: any) => {
+    const field = e.target.name;
+    const value = e.target.value;
+    setForm(
+      {
+        ...form,
+        [field]: value
+      }
+    );
+  }
+
   return (
     <div>
       <HeaderComponent>
@@ -27,6 +50,9 @@ const RegisterPage = () => {
                 E-mail
               </label>
               <input
+                name="email"
+                value={form.email}
+                onChange={handleFormInputChange}
                 className="w-full p-3 rounded text-sm"
                 placeholder="Informe o seu endereço de e-mail"
               />
@@ -36,6 +62,9 @@ const RegisterPage = () => {
                 Senha
               </label>
               <input
+                name="password"
+                value={form.password}
+                onChange={handleFormInputChange}
                 className="w-full p-3 rounded text-sm"
                 placeholder="Informe a sua senha"
               />
@@ -51,6 +80,7 @@ const RegisterPage = () => {
                 bg-slate-950
                 hover:bg-slate-800
                 text-white"
+              onClick={handleUserRegistrationClick}
               >
               Cadastrar
             </button>
