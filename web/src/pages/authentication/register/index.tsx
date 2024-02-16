@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import HeaderComponent from '../../../components/header';
-import FooterComponent from '../../../components/footer';
 import InputField from '../../../components/input-field';
 import UserAuthenticationRequestDTO from '../../../core/dtos/requests/authentication/user-authentication-request.dto';
 import AuthenticatedUserResponseDTO from '../../../core/dtos/responses/authentication/authenticated-user-response.dto';
@@ -11,6 +9,7 @@ import handleUserRegistration from '../../../core/services/authentication/user-r
 import { saveEmail, saveToken } from '../../../core/services/authentication/user-authentication.service';
 
 import loadingIcon from '../../../assets/icons/dots.svg';
+import UnauthenticatedLayout from '../../../components/layouts/unauthenticated-layout';
 
 const RegisterPage = () => {
 
@@ -49,33 +48,24 @@ const RegisterPage = () => {
   };
 
   return (
-    <div>
-      <HeaderComponent>
-        <a className="font-light" href="/app/auth/register">Crie sua conta</a>
-        <a className="font-light" href="/app/auth/login">Entrar</a>
-      </HeaderComponent>
+    <UnauthenticatedLayout>
+      <div className="bg-slate-200 p-10 rounded shadow-lg w-full max-w-xl">
+        <form>
+          <InputField label="E-mail" name="email" value={form.email} onChange={handleFormInputChange} />
+          <InputField label="Senha" name="password" type="password" value={form.password} onChange={handleFormInputChange} />
 
-      <main className="flex items-center justify-center w-full h-screen bg-slate-100 p-10">
-        <div className="bg-slate-200 p-10 rounded shadow-lg w-full max-w-xl">
-          <form>
-            <InputField label="E-mail" name="email" value={form.email} onChange={handleFormInputChange} />
-            <InputField label="Senha" name="password" type="password" value={form.password} onChange={handleFormInputChange} />
+          <a href="/app/auth/login" className="font-light block mb-8">Já possui uma conta?</a>
 
-            <a href="/app/auth/login" className="font-light block mb-8">Já possui uma conta?</a>
-
-            <button
-              className={`flex align-center justify-center w-full p-3 rounded bg-slate-950 hover:bg-slate-800 text-white disabled:bg-slate-800 disabled:cursor-not-allowed disabled:text-slate-500 ${loading ? 'opacity-50' : ''}`}
-              onClick={handleUserRegistrationClick}
-              disabled={loading}
-            >
-              {!loading ? <span>Cadastrar</span> : <img src={loadingIcon} alt="Carregando" />}
-            </button>
-          </form>
-        </div>
-      </main>
-
-      <FooterComponent />
-    </div>
+          <button
+            className={`flex align-center justify-center w-full p-3 rounded bg-slate-950 hover:bg-slate-800 text-white disabled:bg-slate-800 disabled:cursor-not-allowed disabled:text-slate-500 ${loading ? 'opacity-50' : ''}`}
+            onClick={handleUserRegistrationClick}
+            disabled={loading}
+          >
+            {!loading ? <span>Cadastrar</span> : <img src={loadingIcon} alt="Carregando" />}
+          </button>
+        </form>
+      </div>
+    </UnauthenticatedLayout>
   );
 }
 
