@@ -1,5 +1,5 @@
 import UserAuthenticationRequestDTO from '../../dtos/requests/authentication/user-authentication-request.dto';
-import AuthenticatedUserRequestDTO from '../../dtos/responses/authentication/authenticated-user-request.dto';
+import AuthenticatedUserRequestDTO from '../../dtos/responses/authentication/authenticated-user-response.dto';
 import ResponseDTO from '../../dtos/responses/response.dto';
 import apiService from '../api.service';
 
