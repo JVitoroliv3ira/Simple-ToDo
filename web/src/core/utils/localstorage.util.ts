@@ -18,3 +18,5 @@ const get = <C> (key: string): C | null => {
 const remove = (key: string): void => {
   localStorage.removeItem(key);
 }
+
+export { set, get, remove };
