@@ -1,8 +1,10 @@
+import AuthenticatedLayout from "../../../components/layouts/authenticated-layout";
+
 const HomePage = () => {
   return (
-    <div>
-      <h1>Hello, World!</h1>
-    </div>
+    <AuthenticatedLayout>
+      <div></div>
+    </AuthenticatedLayout>
   )
 }
 
