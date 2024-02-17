@@ -1,4 +1,18 @@
+import UserAuthenticationRequestDTO from '../../dtos/requests/authentication/user-authentication-request.dto';
+import AuthenticatedUserRequestDTO from '../../dtos/responses/authentication/authenticated-user-response.dto';
+import ResponseDTO from '../../dtos/responses/response.dto';
 import { set, get, remove } from '../../utils/localstorage.util';
+import apiService from '../api.service';
+
+const handleUserAuthentication = (content: UserAuthenticationRequestDTO) => {
+  const BASE_URL = import.meta.env.VITE_SIMPLE_TODO_API_BASE_URL;
+  const endpoint =  `${BASE_URL}/auth/login`;
+  return apiService<UserAuthenticationRequestDTO, ResponseDTO<AuthenticatedUserRequestDTO>>(
+    endpoint,
+    'POST',
+    content
+  );
+}
 
 const AUTHENTICATION_TOKEN = 'AUTHENTICATION_TOKEN';
 const USER_EMAIL = 'USER_EMAIL';
@@ -16,3 +30,4 @@ const getEmail = (): string | null => get<string>(USER_EMAIL);
 const removeEmail = (): void => remove(USER_EMAIL);
 
 export { saveToken, getToken, removeToken, saveEmail, getEmail, removeEmail };
+export default handleUserAuthentication;
