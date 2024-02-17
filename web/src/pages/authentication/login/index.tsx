@@ -4,10 +4,16 @@ import UserAuthenticationRequestDTO from '../../../core/dtos/requests/authentica
 import InputField from '../../../components/input-field';
 
 import loadingIcon from '../../../assets/icons/dots.svg';
+import { toast } from 'react-toastify';
+import handleUserAuthentication, { saveEmail, saveToken } from '../../../core/services/authentication/user-authentication.service';
+import AuthenticatedUserResponseDTO from '../../../core/dtos/responses/authentication/authenticated-user-response.dto';
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [form, setForm] = useState({ email: '', password: '' } as UserAuthenticationRequestDTO);
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleFormInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -16,7 +22,27 @@ const LoginPage = () => {
 
   const handleLoginClick = async (e: React.FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
+    setLoading(true);
+
+    try {
+      const response = await handleUserAuthentication(form);
+      response.hasErrors ? handleAuthenticationError(response.errors) : handleAuthenticationSuccess(response.content);
+    } catch(e) {
+      toast.error('Ocorreu um erro durante a autenticação.');
+    } finally {
+      setLoading(false);
+    }
   }
+
+  const handleAuthenticationSuccess = (res: AuthenticatedUserResponseDTO): void => {
+    saveToken(res.token);
+    saveEmail(res.email);
+    navigate('/app/home');
+  }
+
+  const handleAuthenticationError = (err: string[]): void => {
+    err.forEach((error) => toast.error(error));
+  } 
 
   return (
     <UnauthenticatedLayout>
