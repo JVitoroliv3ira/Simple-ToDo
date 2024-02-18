@@ -41,7 +41,7 @@ const TodoDetailComponent = ({
           </h3>
         </div>
         <div className='space-x-2'>
-          <button className='bg-orange-500 p-1 rounded'>
+          <button className='bg-blue-500 p-1 rounded'>
             <img src={pencilIcon} alt='Editar tarefa' />
           </button>
           <button className='bg-red-500 p-1 rounded'>
@@ -63,7 +63,7 @@ const TodoDetailComponent = ({
         </div>
       </div>
 
-      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+      <hr className="h-px my-8 bg-slate-400 border-0" />
     </div>
   );
 };
