@@ -5,13 +5,25 @@ import AuthenticatedLayout from "../../../components/layouts/authenticated-layou
 import plusIcon from '../../../assets/icons/plus_icon.svg';
 import CardBodyComponent from "../../../components/card/card-body";
 import TodoDetailComponent from "../../../components/todo-detail";
+import TodoCreateFormComponent from "../../../components/todo-create-form";
+import { useState } from "react";
 
 const HomePage = () => {
+  const [showForm, setShowForm] = useState(false);
+
+  const handleOpenForm = (): void => {
+    setShowForm(true);
+  }
+
+  const handleCloseForm = (): void => {
+    setShowForm(false);
+  }
+
   return (
     <AuthenticatedLayout>
       <CardComponent>
         <CardHeaderComponent title="Tarefas cadastradas">
-          <button className="p-1 bg-slate-950 rounded">
+          <button className="p-1 bg-slate-950 rounded" onClick={handleOpenForm}>
             <img src={plusIcon} alt="Cadastrar tarefa" />
           </button>
         </CardHeaderComponent>
@@ -19,6 +31,8 @@ const HomePage = () => {
         <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
 
         <CardBodyComponent>
+
+          {showForm && <TodoCreateFormComponent onClose={handleCloseForm} />}
           
           <TodoDetailComponent
             title="Titulo 01"
