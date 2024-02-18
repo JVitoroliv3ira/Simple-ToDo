@@ -27,7 +27,7 @@ const AuthenticatedLayout = ({ children }: AuthenticatedLayoutProps) => {
           Sair
         </button>
       </HeaderComponent>
-      <main className="flex items-center justify-center w-full h-screen bg-slate-100 p-10">
+      <main className="flex items-start justify-center w-full h-screen bg-slate-100 p-10">
         {children}
       </main>
       <FooterComponent />
