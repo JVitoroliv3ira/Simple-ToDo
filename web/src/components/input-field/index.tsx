@@ -15,7 +15,7 @@ const InputField = ({ label, name, value, onChange, type = 'text' }: InputFieldP
       type={type}
       value={value}
       onChange={onChange}
-      className="w-full p-3 rounded text-sm"
+      className="w-full p-3 rounded shadow-sm text-sm"
       placeholder={`Informe o seu ${label.toLowerCase()}`}
     />
   </div>
